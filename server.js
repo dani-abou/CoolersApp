@@ -5,6 +5,7 @@ const next = require('next');
 const { default: createShopifyAuth } = require('@shopify/koa-shopify-auth');
 const { verifyRequest } = require('@shopify/koa-shopify-auth');
 const session = require('koa-session');
+const fetch = require("node-fetch");
 
 dotenv.config();
 const { default: graphQLProxy } = require('@shopify/koa-shopify-graphql-proxy');
@@ -19,8 +20,6 @@ const handle = app.getRequestHandler();
 const SHOPIFY_API_SECRET_KEY = process.env.SHOPIFY_API_SECRET_KEY
 const SHOPIFY_API_KEY = process.env.SHOPIFY_API_KEY
 const HOST = process.env.HOST;
-alert(HOST)
-
 
 app.prepare().then(() => {
   const server = new Koa();
@@ -40,6 +39,9 @@ app.prepare().then(() => {
         const { shop, accessToken } = ctx.session;
         ctx.cookies.set('shopOrigin', shop, {
           httpOnly: false,
+        })
+        ctx.cookies.set('accessToken', accessToken, {
+          httpOnly: false
         })
 
         ctx.redirect('/');
@@ -66,3 +68,32 @@ app.prepare().then(() => {
     console.log(`> Ready on http://localhost:${port}`)
   })
 })
+
+app.get("/shop-info", (req, res) => {
+  alert('anything')
+  console.log("test", Cookies.get('accessToken'))
+  fetch("https://svenfish-test-store.myshopify.com/admin/api/graphql.json", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "X-Shopify-Access-Token": Cookies.get('accessToken')
+    },
+    body: JSON.stringify({
+      query: `{
+         shop {
+           name
+           url
+           email
+           myshopifyDomain
+         }
+       }`
+    })
+  })
+    .then(result => {
+      return result.json();
+    })
+    .then(data => {
+      console.log("data returned:\n", data);
+      res.send(data);
+    });
+});

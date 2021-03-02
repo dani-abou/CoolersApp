@@ -33,12 +33,16 @@ async function updateInboundCooler(coolers) {
   const batch = db.batch();
   coolers.map(
     (id) => {
+    // let coolerTuple = await db.collection(databaseName).doc(id).get();
+    // let order = coolerTuple.get('status');
+    // if (order !== "inventory") {
+    //     updateInCoolerCount(order);
+    // }
     let currentRef = db.collection(databaseName).doc(id);
     batch.set(currentRef, {status: 'inventory', employee: 'inventory'});
   }
   )
   let res = await batch.commit();
-  updateInCoolerCount(order);
 }
 
 //Instantiates the page to assosciate the order to cooler
@@ -222,20 +226,22 @@ class MyApp extends App {
     const { Component, pageProps } = this.props;
     const config = { apiKey: API_KEY, shopOrigin: Cookies.get('shopOrigin'), forcedRedirect: true}
     return (
-      <div className="App">
-        <Tabs>
-          <TabList>
-            <Tab>Assigning Cooler</Tab>
-            <Tab>Inbound Cooler</Tab>
-          </TabList>
-          <TabPanel>
-            <OutboundPage employeeLength={3} orderLength={13} coolerLength={4} />
-          </TabPanel>
-          <TabPanel>
-              <InboundPage coolerLength={4} />
-          </TabPanel>
-        </Tabs>
-      </div>
+      <AppProvider>
+        <div className="App">
+          <Tabs>
+            <TabList>
+              <Tab>Assigning Cooler</Tab>
+              <Tab>Inbound Cooler</Tab>
+            </TabList>
+            <TabPanel>
+              <OutboundPage employeeLength={3} orderLength={13} coolerLength={4} />
+            </TabPanel>
+            <TabPanel>
+                <InboundPage coolerLength={4} />
+            </TabPanel>
+          </Tabs>
+        </div>
+      </AppProvider>
     );
   }
 }

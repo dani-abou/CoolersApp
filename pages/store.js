@@ -1,16 +1,16 @@
 import fetch from "node-fetch";
-//import hostURL from './../server.js'
+import Cookies from 'js-cookie';
 
 const DEFAULT_API_VERSION = '2020-04';
-const DEFAULT_ACCESSTOKEN = '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'
-const DEFAULT_STORENAME = 'svenfish-test-store.myshopify.com'
+
 
 //Sends the POST to the graphQL
 
-async function graphqlRequest(gql,  shop = DEFAULT_STORENAME,
-  accessToken = DEFAULT_ACCESSTOKEN, apiVersion=DEFAULT_API_VERSION) {
-
+async function graphqlRequest(gql, shop = Cookies.get('shopOrigin'),
+  accessToken = Cookies.get('accessToken'), apiVersion=DEFAULT_API_VERSION) {
   const url = `https://${shop}/admin/api/${apiVersion}/graphql.json`;
+
+
   const response = await fetch(url, {
     method: 'POST',
     headers: {
@@ -20,7 +20,11 @@ async function graphqlRequest(gql,  shop = DEFAULT_STORENAME,
     },
     body: gql
   });
+
+
   const { data, errors } = await response.json();
+  console.log(data);
+  console.log(errors);
   if (errors) throw new Error(JSON.stringify(errors));
   const userErrors = Object.values(data).find(v => v && v.userErrors);
   if (userErrors && userErrors.length > 0) throw new Error(JSON.stringify(userErrors));
