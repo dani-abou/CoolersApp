@@ -1,0 +1,92 @@
+.App {
+  width: 80%;
+  margin-left: 10%;
+  margin-right: 10%;
+  height: 80vh;
+  margin-top: 10vh;
+  border: 4px solid black;
+  padding-top: 20px;
+}
+
+.checkboxForm {
+  display: block;
+  font-size:20px;
+  text-align: center;
+}
+
+.pageTitle {
+  display: block;
+  text-align: center;
+  font-size: 50px;
+  margin-top: 20px;
+  margin-bottom: 40px;
+}
+
+.checkBoxInsruction {
+  display: block;
+  font-size: 30px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.checkboxLocation {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 40px;
+}
+
+.checkBox {
+  margin: 10px;
+}
+
+.scanLabel {
+  font-size: 30px;
+  display: block;
+  margin-left: 20px;
+  margin-bottom: 20px;
+}
+
+.inputBox {
+  margin: 10px;
+}
+
+.inOutPage {
+  display: block;
+}
+
+.fieldsDiv {
+  display: inline-block;
+  float: left;
+  width: 50vw;
+}
+
+.numbersDiv {
+  display: inline-block;
+  float: right;
+  font-size: 20px;
+  line-height: 2;
+  margin-right: 10vw;
+}
+
+.numOfCools {
+  display: block;
+  font-size: 30px;
+  margin-bottom: 10px;
+  float: right;
+}
+
+.inSubmitButton {
+  display: block;
+  float: right;
+  height: 50px;
+  width: 100px;
+}
+
+.subSectionIn {
+  width: 45vw;
+  display: block;
+  float: right;
+  margin-right: 8vw;
+  line-height: 2;
+}
