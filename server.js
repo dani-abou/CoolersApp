@@ -56,7 +56,6 @@ app.prepare().then(() => {
     await handle(ctx.req, ctx.res);
     ctx.respond = false;
     ctx.res.statusCode = 200;
-    return
   });
 
   // server.use(createShopifyMiddleware(HOST, db, {
@@ -69,31 +68,31 @@ app.prepare().then(() => {
   })
 })
 
-app.get("/shop-info", (req, res) => {
-  alert('anything')
-  console.log("test", Cookies.get('accessToken'))
-  fetch("https://svenfish-test-store.myshopify.com/admin/api/graphql.json", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "X-Shopify-Access-Token": Cookies.get('accessToken')
-    },
-    body: JSON.stringify({
-      query: `{
-         shop {
-           name
-           url
-           email
-           myshopifyDomain
-         }
-       }`
-    })
-  })
-    .then(result => {
-      return result.json();
-    })
-    .then(data => {
-      console.log("data returned:\n", data);
-      res.send(data);
-    });
-});
+// app.get("/shop-info", (req, res) => {
+//   alert('anything')
+//   console.log("test", Cookies.get('accessToken'))
+//   fetch("https://svenfish-test-store.myshopify.com/admin/api/graphql.json", {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json",
+//       "X-Shopify-Access-Token": Cookies.get('accessToken')
+//     },
+//     body: JSON.stringify({
+//       query: `{
+//          shop {
+//            name
+//            url
+//            email
+//            myshopifyDomain
+//          }
+//        }`
+//     })
+//   })
+//     .then(result => {
+//       return result.json();
+//     })
+//     .then(data => {
+//       console.log("data returned:\n", data);
+//       res.send(data);
+//     });
+// });
